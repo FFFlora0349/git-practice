@@ -88,9 +88,9 @@ drwxr-xr-x  12 yutingchai  staff    384 14 Jun 11:41 .
 -rw-r--r--   1 yutingchai  staff   3252 14 Jun 11:42 typescript
 drwxr-xr-x  13 yutingchai  staff    416 14 Jun 11:42 .git
 
-bash-3.2$  but the branch 9e3fd3a itself contains only file1.html and typescript.
+bash-3.2$ The branch 9e3fd3a is before the branch 6bfadb9 and only contains file1.html and typescript.
 
-bash-3.2$ "git reset --soft xxx" from branch A to branch B automatically stages all changes that are new to branch B from the perspective of branch A.
+bash-3.2$ "git reset --soft xxx" from branch A to branch B automatically stages all changes that are new (newly added to branch A) from the perspective of branch A.
 
 bash-3.2$ exit
 exit
