@@ -16,19 +16,21 @@ import javax.swing.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class Animal_Clicker implements ActionListener{
+public class AnimalClicker implements ActionListener{
 
     int Money = 0;
     boolean first_click_cow = false;
     boolean first_click_pig = false;
     boolean first_click_sheep = false;
+    boolean first_click_goat = false;
     boolean first_click_horse = false;
+    boolean first_win = false;
 
     SoundEffect se = new SoundEffect();
     URL pigSound; String chickenSound,cowSound,sheepSound,horseSound,goatSound;
     String BGM;
-    String fireworkSound; // added
-    static Clip clip; // added
+    String fireworkSound;
+    static Clip clip;
 
     JLabel Count;
     JFrame Frame;
@@ -56,27 +58,28 @@ public class Animal_Clicker implements ActionListener{
     JButton Sheep_Button;
     JButton Goat_Button;
     JButton Horse_Button;
-    JButton Win_Button;
+//    JButton Win_Button;
 
     //Constructor
-    public Animal_Clicker() throws MalformedURLException {
+    public AnimalClicker() throws MalformedURLException {
         Frame=new JFrame("Animal Clicker");
         Backdrop=new JPanel();
         Count=new JLabel("$0");
         try {
-            img = ImageIO.read(new File("/Users/yutingchai/IdeaProjects/AnimalClicker/fireworks.png"));
-        } catch(IOException e) {
-            System.out.println(e);
+            img = ImageIO.read(new File("/Users/yutingchai/IdeaProjects/AnimalClicker/resource/fireworks.png"));
+        } catch(IOException ex) {
+            System.out.println(ex);
         }
 
         Chicken_Button = new JButton("+1");
         try {
-            Image img2 = ImageIO.read(new File("/Users/yutingchai/IdeaProjects/AnimalClicker/fireworks.png"));
+            Image img2 = ImageIO.read(new File("/Users/yutingchai/IdeaProjects/AnimalClicker/resource/fireworks.png"));
             img2 = img2.getScaledInstance( 50, 50, java.awt.Image.SCALE_SMOOTH );
             Chicken_Button.setIcon(new ImageIcon(img2));
         } catch(IOException ex) {
             System.out.println(ex);
         }
+
         //Cw_Button = new JButton("+5");
         //try {
         //Image img3 = ImageIO.read(new File("/Users/sxfllwm/Desktop/Cow.png"));
@@ -88,71 +91,78 @@ public class Animal_Clicker implements ActionListener{
 //}
         Cow_Button = new JButton("+5");
         try {
-            Image img = ImageIO.read(new File("/Users/yutingchai/IdeaProjects/AnimalClicker/fireworks.png"));
+            Image img = ImageIO.read(new File("/Users/yutingchai/IdeaProjects/AnimalClicker/resource/fireworks.png"));
             img = img.getScaledInstance( 50, 50, java.awt.Image.SCALE_SMOOTH );
             Cow_Button.setIcon(new ImageIcon(img));
         } catch(IOException ex) {
-            System.out.println(ex + " 1");
+            System.out.println(ex + " here to debug");
         }
         Pig_Button = new JButton("+10");
         try {
-            Image img = ImageIO.read(new File("/Users/yutingchai/IdeaProjects/AnimalClicker/fireworks.png"));
+            Image img = ImageIO.read(new File("/Users/yutingchai/IdeaProjects/AnimalClicker/resource/fireworks.png"));
             img = img.getScaledInstance( 50, 50, java.awt.Image.SCALE_SMOOTH );
             Pig_Button.setIcon(new ImageIcon(img));
         } catch(IOException ex) {
-            System.out.println(ex + " 2");
+            System.out.println(ex + " here to debug again");
         }
         Sheep_Button = new JButton("+20");
         try {
-            Image img = ImageIO.read(new File("/Users/yutingchai/IdeaProjects/AnimalClicker/fireworks.png"));
+            Image img = ImageIO.read(new File("/Users/yutingchai/IdeaProjects/AnimalClicker/resource/fireworks.png"));
             img = img.getScaledInstance( 50, 50, java.awt.Image.SCALE_SMOOTH );
             Sheep_Button.setIcon(new ImageIcon(img));
         } catch(IOException ex) {
             System.out.println(ex);
         }
-
-        Horse_Button = new JButton("+??");
+        Goat_Button = new JButton("+50");
         try {
-            Image img = ImageIO.read(new File("/Users/yutingchai/IdeaProjects/AnimalClicker/fireworks.png"));
+            Image img = ImageIO.read(new File("/Users/yutingchai/IdeaProjects/AnimalClicker/resource/fireworks.png"));
+            img = img.getScaledInstance( 50, 50, java.awt.Image.SCALE_SMOOTH );
+            Goat_Button.setIcon(new ImageIcon(img));
+        } catch(IOException ex) {
+            System.out.println(ex);
+        }
+        Horse_Button = new JButton("+ 100");
+        try {
+            Image img = ImageIO.read(new File("/Users/yutingchai/IdeaProjects/AnimalClicker/resource/fireworks.png"));
             img = img.getScaledInstance( 50, 50, java.awt.Image.SCALE_SMOOTH );
             Horse_Button.setIcon(new ImageIcon(img));
         } catch(IOException ex) {
             System.out.println(ex);
         }
 
-        Win_Button = new JButton("Win!");  // added
-        try {
-            Image img = ImageIO.read(new File("/Users/yutingchai/IdeaProjects/AnimalClicker/fireworks.png"));
-            img = img.getScaledInstance( 50, 50, java.awt.Image.SCALE_SMOOTH );
-            Win_Button.setIcon(new ImageIcon(img));
-        } catch(IOException ex) {
-            System.out.println(ex);
-        }
+//        Win_Button = new JButton("Win!");  // added
+//        try {
+//            Image img = ImageIO.read(new File("/Users/yutingchai/IdeaProjects/AnimalClicker/resource/fireworks.png"));
+//            img = img.getScaledInstance( 50, 50, java.awt.Image.SCALE_SMOOTH );
+//            Win_Button.setIcon(new ImageIcon(img));
+//        } catch(IOException ex) {
+//            System.out.println(ex);
+//        }
 
 
         try {
-            img2 = ImageIO.read(new File("/Users/yutingchai/IdeaProjects/AnimalClicker/fireworks.png"));  // Chicken.png
+            img2 = ImageIO.read(new File("/Users/yutingchai/IdeaProjects/AnimalClicker/resource/fireworks.png"));  // Chicken.png
         } catch(IOException e) {
             System.out.println(e);
         }
 
         try {
-            img3 = ImageIO.read(new File("/Users/yutingchai/IdeaProjects/AnimalClicker/fireworks.png"));  // Cow.png
+            img3 = ImageIO.read(new File("/Users/yutingchai/IdeaProjects/AnimalClicker/resource/fireworks.png"));  // Cow.png
         } catch(IOException e) {
             System.out.println(e);
         }
         try {
-            img4 = ImageIO.read(new File("/Users/yutingchai/IdeaProjects/AnimalClicker/fireworks.png"));  // Sheep.png
+            img4 = ImageIO.read(new File("/Users/yutingchai/IdeaProjects/AnimalClicker/resource/fireworks.png"));  // Sheep.png
         } catch(IOException e) {
             System.out.println(e);
         }
         try {
-            img5 = ImageIO.read(new File("/Users/yutingchai/IdeaProjects/AnimalClicker/fireworks.png"));  // Goat.png
+            img5 = ImageIO.read(new File("/Users/yutingchai/IdeaProjects/AnimalClicker/resource/fireworks.png"));  // Goat.png
         } catch(IOException e) {
             System.out.println(e);
         }
         try {
-            img6 = ImageIO.read(new File("/Users/yutingchai/IdeaProjects/AnimalClicker/fireworks.png"));  // Horse.png
+            img6 = ImageIO.read(new File("/Users/yutingchai/IdeaProjects/AnimalClicker/resource/fireworks.png"));  // Horse.png
         } catch(IOException e) {
             System.out.println(e);
         }
@@ -161,8 +171,9 @@ public class Animal_Clicker implements ActionListener{
         Cow_Button.addActionListener(this);
         Pig_Button.addActionListener(this);
         Sheep_Button.addActionListener(this);
+        Goat_Button.addActionListener(this);
         Horse_Button.addActionListener(this);
-        Win_Button.addActionListener(this);
+//        Win_Button.addActionListener(this);
 
         CenterPanel = new JPanel() {
             @Override
@@ -250,19 +261,20 @@ public class Animal_Clicker implements ActionListener{
         Backdrop.add(Cow_Button);
         Backdrop.add(Pig_Button);
         Backdrop.add(Sheep_Button);
+        Backdrop.add(Goat_Button);
         Backdrop.add(Horse_Button);
-        Backdrop.add(Win_Button);
+//        Backdrop.add(Win_Button);
         Backdrop.add(Count);
 
         Frame.setBackground(Color.blue);
 
 
-        CenterPanel.setBounds(1000, 500, 100, 100);
-        A.setBounds(600, 500, 200, 200);
-        B.setBounds(800, 500, 200, 200);
-        C.setBounds(600, 750, 200, 200);
-        D.setBounds(800, 750, 200, 200);
-        E.setBounds(1000, 750, 200, 200);
+        A.setBounds(400, 300, 200, 200);
+        B.setBounds(600, 300, 200, 200);
+        CenterPanel.setBounds(800, 300, 100, 100);
+        C.setBounds(400, 550, 200, 200);
+        D.setBounds(600, 550, 200, 200);
+        E.setBounds(800, 550, 200, 200);
 //Pig_Button.setBounds(750, 750, 500, 200);
 //Backdrop.setBounds(200, 200, 1000, 1000);
         Frame.add(CenterPanel);
@@ -301,11 +313,12 @@ public class Animal_Clicker implements ActionListener{
 
 
     public static void main(String[] args) throws MalformedURLException {
-        new Animal_Clicker();
+        new AnimalClicker();
     }
 
 
     //// an inner class for creating sounds
+    // From website https://www.youtube.com/watch?v=TErboGLHZGA - How to Play, Loop, Pause and Stop Music in Java
     public static class SoundEffect {
         public void playMusicURL(URL filePath, boolean isBGM) {
             try {
@@ -372,7 +385,7 @@ public class Animal_Clicker implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == Chicken_Button) {
 //            se.playMusicLocal(chickenSound, false);  // play music when button is clicked
-            Money++;
+            Money+=1000;
             Count.setText("$" + Money);
         }
         // MAKE THE ELSE-IFS PARALLEL (more reasonable), NOT NESTED.
@@ -389,42 +402,61 @@ public class Animal_Clicker implements ActionListener{
             }
         } else if (e.getSource() == Pig_Button) {
             if (!first_click_pig && Money >= 200) {
-//            se.playMusicURL(pigSound, false);  // play music when button is clicked
+//            se.playMusicURL(pigSound, false);
                 Money -= 200;
                 first_click_pig = true;
                 Count.setText("$" + Money);
             } else if (first_click_pig) {
-//            se.playMusicURL(pigSound, false);  // play music when button is clicked
+//            se.playMusicURL(pigSound, false);
                 Money += 10;
                 Count.setText("$" + Money);
             }
         } else if (e.getSource() == Sheep_Button) {
             if (!first_click_sheep && Money >= 500) {
-//            se.playMusicLocal(sheepSound, false);  // play music when button is clicked
+//            se.playMusicLocal(sheepSound, false);
                 Money -= 500;
                 first_click_sheep = true;
                 Count.setText("$" + Money);
             } else if (first_click_sheep) {
-//            se.playMusicLocal(sheepSound, false);  // play music when button is clicked
+//            se.playMusicLocal(sheepSound, false);
                 Money += 20;
                 Count.setText("$" + Money);
             }
+        } else if (e.getSource() == Goat_Button) {
+            if (!first_click_goat && Money >= 1000) {
+//            se.playMusicLocal(goatSound, false);
+                Money -= 1000;
+                first_click_goat = true;
+                Count.setText("$" + Money);
+            } else if (first_click_goat) {
+//            se.playMusicLocal(goatSound, false);
+                Money += 50;
+                Count.setText("$" + Money);
+            }
         } else if (e.getSource() == Horse_Button) {
-            if (!first_click_sheep && Money >= 600) {
-//            se.playMusicLocal(horseSound, false);  // play music when button is clicked
-                Money -= 600;
+            if (!first_click_horse && Money >= 2000) {
+//            se.playMusicLocal(horseSound, false);
+                Money -= 2000;
                 first_click_horse = true;
                 Count.setText("$" + Money);
             } else if (first_click_horse) {
-//            se.playMusicLocal(horseSound, false);  // play music when button is clicked
-                Money += 30;
+//            se.playMusicLocal(horseSound, false);
+                Money += 100;
                 Count.setText("$" + Money);
             }
-        } else if (e.getSource() == Win_Button) {  // added
+        } /*else if (e.getSource() == Win_Button) {
+            clip.stop();
+            se.playMusicLocal(fireworkSound, true);
+            JOptionPane.showMessageDialog(null, "Congrats! You win!!");
+        }*/
+
+        if (!first_win && Money >= 25000) { // firework sound play on the first time the money amount reaches 25000$
+            first_win = true;
             clip.stop();
             se.playMusicLocal(fireworkSound, true);
             JOptionPane.showMessageDialog(null, "Congrats! You win!!");
         }
+
     }
 }
 
